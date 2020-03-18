@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Реализация функции sumUpDiagonals</title>
+</head>
+<body>
+	<h1>Задание 1</h1>
+	<p>В примере кода разработайте реализацию функции sumUpDiagonals() на JavaScript таким образом, чтобы она
+	возвращала суммы основной и вторичной диагоналей квадратной матрицы.</p>
+
+	<code>
+		var matrixExample = [
+		[1, 2, 3, 4],
+		[4, 5, 6, 5],
+		[7, 8, 9, 7],
+		[7, 8, 9, 7]
+		];
+	</code>
+
+	<p>P.S. Ответ задания можно увидеть на консоле или блоке "Результат задания"</p>
+
+	<div class="res">
+		<p>Результат задания: <span id="res"></span></p>
+	</div>
+</body>
+<script>
+	var matrixExample = [
+	[1, 2, 3, 4],
+	[4, 5, 6, 5],
+	[7, 8, 9, 7],
+	[7, 8, 9, 7]
+	];
+	function sumUpDiagonals(matrix) {
+		try {
+			const length = matrix.length;
+
+			matrix.forEach((subarray) => {
+				if (subarray.length !== length) {
+					throw new SyntaxError("Данный массив не является квадратной матрицой");
+				}
+			});
+
+			return matrix.map((array, first) => {
+				const second = array.length - 1 - first,
+					firstElem = array[first],
+					secondElem = array[second];
+
+				const notNumber = (element) => typeof element !== 'number' || isNaN(element);
+
+				if (notNumber(firstElem) || notNumber(secondElem)) {
+					throw new SyntaxError('Введенные данные не является числом');
+				}
+
+				return firstElem === secondElem ? (firstElem * 2) : (firstElem + secondElem);
+
+			})
+			.reduce((prevElem, nextElem) => prevElem + nextElem);
+		}
+		catch (error) {
+			return error;
+		}
+	}
+
+	console.log(sumUpDiagonals(matrixExample));
+
+	var result = document.getElementById('res');
+
+	result.append(sumUpDiagonals(matrixExample));
+</script>
+</html>
